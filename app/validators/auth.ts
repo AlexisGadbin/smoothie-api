@@ -1,4 +1,5 @@
 import vine from '@vinejs/vine'
+import { GenderEnum } from '../utils/enums/gender_enum.js'
 
 const password = vine.string().minLength(8)
 
@@ -15,6 +16,11 @@ export const registerValidator = vine.compile(
       }),
 
     password,
+    confirmPassword: password,
+    firstName: vine.string().trim().minLength(2),
+    lastName: vine.string().trim().minLength(2),
+    gender: vine.enum(GenderEnum).nullable(),
+    birthDate: vine.date(),
   })
 )
 

@@ -6,7 +6,13 @@ export default class AuthController {
   async register({ request }: HttpContext) {
     const data = await request.validateUsing(registerValidator)
 
-    const user = await User.create(data)
+    if (data.password !== data.confirmPassword) {
+      throw new Error('Les mots de passe ne correspondent pas')
+    }
+
+    const { confirmPassword, ...userData } = data
+
+    const user = await User.create(userData)
 
     return User.accessTokens.create(user)
   }
