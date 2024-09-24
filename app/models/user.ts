@@ -2,9 +2,11 @@ import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { compose } from '@adonisjs/core/helpers'
 import hash from '@adonisjs/core/services/hash'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import type { HasMany } from '@adonisjs/lucid/types/relations'
 import { DateTime } from 'luxon'
-import { GenderEnum } from '../utils/enums/gender_enum.js'
+import { GenderEnum } from '../utils/enums/gender.js'
+import Smoothie from './smoothie.js'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -32,6 +34,9 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @column()
   declare gender: GenderEnum | null
+
+  @hasMany(() => Smoothie)
+  declare smoothies: HasMany<typeof Smoothie>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

@@ -1,5 +1,5 @@
 import vine from '@vinejs/vine'
-import { GenderEnum } from '../utils/enums/gender_enum.js'
+import { GenderEnum } from '../utils/enums/gender.js'
 
 const password = vine.string().minLength(8)
 

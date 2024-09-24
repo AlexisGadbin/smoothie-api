@@ -1,5 +1,5 @@
 import { BaseSchema } from '@adonisjs/lucid/schema'
-import { GenderEnum } from '../../app/utils/enums/gender_enum.js'
+import { GenderEnum } from '../../app/utils/enums/gender.js'
 
 export default class extends BaseSchema {
   protected tableName = 'users'
