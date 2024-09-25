@@ -10,6 +10,7 @@
 const AuthController = () => import('#controllers/auth_controller')
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+const CategoryController = () => import('#controllers/category_controller')
 const SmoothieController = () => import('#controllers/smoothie_controller')
 const UserController = () => import('#controllers/user_controller')
 
@@ -40,5 +41,11 @@ router
         router.get('day', [SmoothieController, 'smoothieOfTheDay'])
       })
       .prefix('smoothie')
+
+    router
+      .group(() => {
+        router.get('/', [CategoryController, 'get'])
+      })
+      .prefix('category')
   })
   .prefix('api')
