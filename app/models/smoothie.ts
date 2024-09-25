@@ -1,7 +1,7 @@
 import { BaseModel, belongsTo, column, manyToMany } from '@adonisjs/lucid/orm'
 import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
 import { DateTime } from 'luxon'
-import { SmoothieCategory } from '../utils/enums/smoothie_category.js'
+import Category from './category.js'
 import Ingredient from './ingredient.js'
 import User from './user.js'
 
@@ -11,9 +11,6 @@ export default class Smoothie extends BaseModel {
 
   @column()
   declare name: string
-
-  @column()
-  declare category: SmoothieCategory
 
   @column()
   declare authorId: number
@@ -26,6 +23,11 @@ export default class Smoothie extends BaseModel {
     pivotColumns: ['quantity', 'unit'],
   })
   declare ingredients: ManyToMany<typeof Ingredient>
+
+  @manyToMany(() => Category, {
+    pivotTable: 'smoothie_categories',
+  })
+  declare categories: ManyToMany<typeof Category>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

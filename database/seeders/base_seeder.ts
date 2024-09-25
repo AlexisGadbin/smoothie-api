@@ -1,3 +1,4 @@
+import Category from '#models/category'
 import Ingredient from '#models/ingredient'
 import Smoothie from '#models/smoothie'
 import User from '#models/user'
@@ -17,6 +18,18 @@ export default class extends BaseSeeder {
         lastName: 'Doe',
         gender: GenderEnum.Other,
         birthDate: new Date('1990-01-01'),
+      },
+    ])
+
+    const categories = await Category.createMany([
+      {
+        name: SmoothieCategory.PROTEIN,
+      },
+      {
+        name: SmoothieCategory.ENERGY,
+      },
+      {
+        name: SmoothieCategory.VEGAN,
       },
     ])
 
@@ -115,7 +128,6 @@ export default class extends BaseSeeder {
 
     const smoothie = await Smoothie.create({
       name: 'Green Smoothie',
-      category: SmoothieCategory.VEGAN,
       authorId: 1,
     })
 
@@ -136,6 +148,11 @@ export default class extends BaseSeeder {
         quantity: 1,
         unit: Unit.GRAM,
       },
+    })
+
+    await smoothie.related('categories').attach({
+      [categories[0].id]: {},
+      [categories[1].id]: {},
     })
   }
 }

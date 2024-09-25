@@ -3,9 +3,11 @@ import type { HttpContext } from '@adonisjs/core/http'
 
 export default class SmoothieController {
   async get({}: HttpContext) {
-    const smoothies = await Smoothie.query().preload('ingredients', (builder) => {
-      builder.pivotColumns(['quantity', 'unit'])
-    })
+    const smoothies = await Smoothie.query()
+      .preload('categories')
+      .preload('ingredients', (builder) => {
+        builder.pivotColumns(['quantity', 'unit'])
+      })
 
     return this._populateSmoothieWithIngredients(smoothies)
   }
@@ -15,6 +17,7 @@ export default class SmoothieController {
       .preload('ingredients', (builder) => {
         builder.pivotColumns(['quantity', 'unit'])
       })
+      .preload('categories')
       .orderByRaw('RANDOM()')
       .firstOrFail()
 
