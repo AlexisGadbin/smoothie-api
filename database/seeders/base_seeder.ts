@@ -129,6 +129,7 @@ export default class extends BaseSeeder {
     const smoothie = await Smoothie.create({
       name: 'Green Smoothie',
       authorId: 1,
+      color: '#64963f',
     })
 
     await smoothie.related('ingredients').attach({

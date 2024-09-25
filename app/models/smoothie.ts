@@ -15,6 +15,9 @@ export default class Smoothie extends BaseModel {
   @column()
   declare authorId: number
 
+  @column()
+  declare color: string
+
   @belongsTo(() => User)
   declare author: BelongsTo<typeof User>
 
