@@ -14,6 +14,9 @@ export default class Ingredient extends BaseModel {
   @column()
   declare category: IngredientCategory
 
+  @column()
+  declare imageUrl: string
+
   @manyToMany(() => Smoothie, {
     pivotTable: 'smoothie_ingredients',
     pivotColumns: ['quantity', 'unit'],
