@@ -4,6 +4,7 @@ import { Unit } from '../utils/enums/unit.js'
 export const createSmoothieValidator = vine.compile(
   vine.object({
     name: vine.string().minLength(2),
+    color: vine.string().minLength(2).maxLength(7),
     ingredients: vine.array(
       vine.object({
         ingredientId: vine.number(),

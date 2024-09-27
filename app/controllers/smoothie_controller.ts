@@ -38,7 +38,7 @@ export default class SmoothieController {
 
     const smoothie = await Smoothie.create({
       name: data.name,
-      color: '#64963f',
+      color: data.color,
       authorId: user.id,
     })
 
