@@ -1,4 +1,5 @@
 import Smoothie from '#models/smoothie'
+import { createSmoothieValidator } from '#validators/create_smoothie'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class SmoothieController {
@@ -20,6 +21,28 @@ export default class SmoothieController {
       .preload('categories')
       .orderByRaw('RANDOM()')
       .firstOrFail()
+
+    return smoothie
+  }
+
+  async create({ request, auth }: HttpContext) {
+    const data = await request.validateUsing(createSmoothieValidator)
+    const user = auth.user!
+
+    const smoothie = await Smoothie.create({
+      name: data.name,
+      color: '#64963f',
+      authorId: user.id,
+    })
+
+    for (const ingredient of data.ingredients) {
+      await smoothie.related('ingredients').attach({
+        [ingredient.ingredientId]: {
+          quantity: ingredient.quantity,
+          unit: ingredient.unit,
+        },
+      })
+    }
 
     return smoothie
   }
