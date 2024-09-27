@@ -17,7 +17,19 @@ export default class SmoothieController {
         builder.pivotColumns(['quantity', 'unit'])
       })
 
-    return this._populateSmoothieWithIngredients(smoothies)
+    return this._populateSmoothiesWithIngredients(smoothies)
+  }
+
+  async getById({ params }: HttpContext) {
+    const smoothie = await Smoothie.query()
+      .where('id', params.id)
+      .preload('categories')
+      .preload('ingredients', (builder) => {
+        builder.pivotColumns(['quantity', 'unit'])
+      })
+      .firstOrFail()
+
+    return this._populateSmoothieWithIngredients(smoothie)
   }
 
   async smoothieOfTheDay({}: HttpContext) {
@@ -67,16 +79,18 @@ export default class SmoothieController {
     return smoothie
   }
 
-  async _populateSmoothieWithIngredients(smoothies: Smoothie[]) {
-    return smoothies.map((smoothie) => {
-      return {
-        ...smoothie.toJSON(),
-        ingredients: smoothie.ingredients.map((ingredient) => ({
-          ...ingredient.toJSON(),
-          quantity: ingredient.$extras.pivot_quantity,
-          unit: ingredient.$extras.pivot_unit,
-        })),
-      }
-    })
+  async _populateSmoothiesWithIngredients(smoothies: Smoothie[]) {
+    return Promise.all(smoothies.map((smoothie) => this._populateSmoothieWithIngredients(smoothie)))
+  }
+
+  async _populateSmoothieWithIngredients(smoothie: Smoothie) {
+    return {
+      ...smoothie.toJSON(),
+      ingredients: smoothie.ingredients.map((ingredient) => ({
+        ...ingredient.toJSON(),
+        quantity: ingredient.$extras.pivot_quantity,
+        unit: ingredient.$extras.pivot_unit,
+      })),
+    }
   }
 }

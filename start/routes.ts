@@ -41,6 +41,7 @@ router
         router.get('/', [SmoothieController, 'get'])
         router.get('day', [SmoothieController, 'smoothieOfTheDay'])
         router.post('/', [SmoothieController, 'create'])
+        router.get(':id', [SmoothieController, 'getById'])
       })
       .prefix('smoothie')
       .use(middleware.auth())
