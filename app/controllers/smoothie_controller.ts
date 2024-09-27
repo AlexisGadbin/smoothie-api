@@ -1,8 +1,15 @@
+import Category from '#models/category'
 import Smoothie from '#models/smoothie'
+import SmoothieService from '#services/smoothie_service'
 import { createSmoothieValidator } from '#validators/create_smoothie'
+import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
+import { SmoothieCategory } from '../utils/enums/smoothie_category.js'
 
+@inject()
 export default class SmoothieController {
+  constructor(private smoothieService: SmoothieService) {}
+
   async get({}: HttpContext) {
     const smoothies = await Smoothie.query()
       .preload('categories')
@@ -43,6 +50,19 @@ export default class SmoothieController {
         },
       })
     }
+
+    await smoothie.load('ingredients', (builder) => {
+      builder.pivotColumns(['quantity', 'unit'])
+    })
+
+    const categories: SmoothieCategory[] = await this.smoothieService.calculateCategories(smoothie)
+
+    const categoryIds = await Category.query()
+      .whereIn('name', categories)
+      .select('id')
+      .then((c) => c.map((category) => category.id))
+
+    await smoothie.related('categories').attach(categoryIds)
 
     return smoothie
   }
