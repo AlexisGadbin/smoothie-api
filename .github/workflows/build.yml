@@ -50,3 +50,4 @@ jobs:
             cd /home/smoothie
             docker service update --image ghcr.io/alexisgadbin/smoothie-api:${{ github.sha }} smoothie_api --force --with-registry-auth
             docker exec smoothie_api.1.$(docker service ps -f 'desired-state=running' smoothie_api -q) node ace migration:run --force
+            docker exec smoothie_api.1.$(docker service ps -f 'desired-state=running' smoothie_api -q) node ace db:seed

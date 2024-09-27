@@ -17,6 +17,18 @@ export default class Ingredient extends BaseModel {
   @column()
   declare imageUrl: string
 
+  @column()
+  declare calories: number
+
+  @column()
+  declare protein: number
+
+  @column()
+  declare carbs: number
+
+  @column()
+  declare fat: number
+
   @manyToMany(() => Smoothie, {
     pivotTable: 'smoothie_ingredients',
     pivotColumns: ['quantity', 'unit'],
