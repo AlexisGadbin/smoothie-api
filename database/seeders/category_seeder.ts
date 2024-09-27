@@ -4,7 +4,7 @@ import { SmoothieCategory } from '../../app/utils/enums/smoothie_category.js'
 
 export default class extends BaseSeeder {
   async run() {
-    await Category.createMany([
+    const categories = [
       {
         name: SmoothieCategory.PROTEIN,
       },
@@ -14,6 +14,15 @@ export default class extends BaseSeeder {
       {
         name: SmoothieCategory.VEGAN,
       },
-    ])
+    ]
+
+    for (const category of categories) {
+      await Category.firstOrCreate(
+        {
+          name: category.name,
+        },
+        category
+      )
+    }
   }
 }
