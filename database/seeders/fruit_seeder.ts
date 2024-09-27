@@ -24,7 +24,7 @@ export default class extends BaseSeeder {
         fat: 0.2,
       },
       {
-        name: 'Lemon',
+        name: 'Citron',
         category: IngredientCategory.FRUIT,
         imageUrl: 'lemon.png',
         calories: 29,
@@ -42,7 +42,7 @@ export default class extends BaseSeeder {
         fat: 0.5,
       },
       {
-        name: 'Blueberry',
+        name: 'Myrtille',
         category: IngredientCategory.FRUIT,
         imageUrl: 'blueberry.png',
         calories: 29,
@@ -51,7 +51,7 @@ export default class extends BaseSeeder {
         fat: 0.3,
       },
       {
-        name: 'Strawberry',
+        name: 'Fraise',
         category: IngredientCategory.FRUIT,
         imageUrl: 'strawberry.png',
         calories: 32,
@@ -60,7 +60,7 @@ export default class extends BaseSeeder {
         fat: 0.4,
       },
       {
-        name: 'Watermelon',
+        name: 'Pastèque',
         category: IngredientCategory.FRUIT,
         imageUrl: 'watermelon.png',
         calories: 30,
@@ -69,7 +69,7 @@ export default class extends BaseSeeder {
         fat: 0.2,
       },
       {
-        name: 'Pineapple',
+        name: 'Ananas',
         category: IngredientCategory.FRUIT,
         imageUrl: 'pineapple.png',
         calories: 50,
@@ -78,7 +78,7 @@ export default class extends BaseSeeder {
         fat: 0.1,
       },
       {
-        name: 'Peach',
+        name: 'Pêche',
         category: IngredientCategory.FRUIT,
         imageUrl: 'peach.png',
         calories: 39,
@@ -87,7 +87,7 @@ export default class extends BaseSeeder {
         fat: 0.3,
       },
       {
-        name: 'Cherry',
+        name: 'Cerise',
         category: IngredientCategory.FRUIT,
         imageUrl: 'cherry.png',
         calories: 50,
@@ -96,7 +96,7 @@ export default class extends BaseSeeder {
         fat: 0.3,
       },
       {
-        name: 'Banana',
+        name: 'Banane',
         category: IngredientCategory.FRUIT,
         imageUrl: 'banana.png',
         calories: 96,
@@ -105,7 +105,7 @@ export default class extends BaseSeeder {
         fat: 0.2,
       },
       {
-        name: 'Pear',
+        name: 'Poire',
         category: IngredientCategory.FRUIT,
         imageUrl: 'pear.png',
         calories: 57,
@@ -123,7 +123,7 @@ export default class extends BaseSeeder {
         fat: 0,
       },
       {
-        name: 'Grape',
+        name: 'Raisin',
         category: IngredientCategory.FRUIT,
         imageUrl: 'grape.png',
         calories: 69,
@@ -132,7 +132,7 @@ export default class extends BaseSeeder {
         fat: 0.2,
       },
       {
-        name: 'Raspberry',
+        name: 'Framboise',
         category: IngredientCategory.FRUIT,
         imageUrl: 'raspberry.png',
         calories: 52,
@@ -141,7 +141,7 @@ export default class extends BaseSeeder {
         fat: 0.7,
       },
       {
-        name: 'Coconut',
+        name: 'Noix de coco',
         category: IngredientCategory.FRUIT,
         imageUrl: 'coconut.png',
         calories: 354,
