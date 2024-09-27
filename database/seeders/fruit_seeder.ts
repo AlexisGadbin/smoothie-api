@@ -4,7 +4,7 @@ import { IngredientCategory } from '../../app/utils/enums/ingredient_category.js
 
 export default class extends BaseSeeder {
   async run() {
-    await Ingredient.createMany([
+    const ingredients = [
       {
         name: 'Pomme',
         category: IngredientCategory.FRUIT,
@@ -149,6 +149,15 @@ export default class extends BaseSeeder {
         carbs: 15.2,
         fat: 33.5,
       },
-    ])
+    ]
+
+    for (const ingredient of ingredients) {
+      await Ingredient.firstOrCreate(
+        {
+          name: ingredient.name,
+        },
+        ingredient
+      )
+    }
   }
 }
