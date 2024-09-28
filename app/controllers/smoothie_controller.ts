@@ -1,4 +1,5 @@
 import Category from '#models/category'
+import DailySmoothie from '#models/daily_smoothie'
 import Smoothie from '#models/smoothie'
 import SmoothieService from '#services/smoothie_service'
 import { createSmoothieValidator } from '#validators/create_smoothie'
@@ -33,6 +34,19 @@ export default class SmoothieController {
   }
 
   async smoothieOfTheDay({}: HttpContext) {
+    const existingDailySmoothie = await DailySmoothie.query()
+      .where('date', new Date().toISOString().split('T')[0])
+      // .preload('smoothie')
+      // .preload('categories')
+      .preload('smoothie', (builder) => {
+        builder.preload('categories')
+      })
+      .first()
+
+    if (existingDailySmoothie) {
+      return existingDailySmoothie.smoothie
+    }
+
     const smoothie = await Smoothie.query()
       .preload('ingredients', (builder) => {
         builder.pivotColumns(['quantity', 'unit'])
@@ -40,6 +54,11 @@ export default class SmoothieController {
       .preload('categories')
       .orderByRaw('RANDOM()')
       .firstOrFail()
+
+    await DailySmoothie.create({
+      smoothieId: smoothie.id,
+      date: new Date().toISOString().split('T')[0],
+    })
 
     return smoothie
   }
